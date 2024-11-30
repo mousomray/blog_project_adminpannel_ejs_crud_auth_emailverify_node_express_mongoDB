@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../common/head.ejs') %>
+
+  <style>
+    /* Styling for the contact form */
+    .contact-form {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #f9f9f9;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .contact-form .form-group {
+      margin-bottom: 15px;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      padding: 12px;
+      margin: 5px 0;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    .contact-form textarea {
+      resize: vertical;
+      height: 150px;
+    }
+
+    .contact-form input:focus,
+    .contact-form textarea:focus {
+      border-color: #007bff;
+      outline: none;
+    }
+
+    .submit-btn {
+      padding: 12px 30px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+
+    .submit-btn:hover {
+      background-color: #0056b3;
+    }
+
+    /* Styling for social links */
+    .social-links {
+      list-style: none;
+      padding: 0;
+    }
+
+    .social-links li {
+      display: inline-block;
+      margin-right: 10px;
+    }
+
+    .social-links a {
+      text-decoration: none;
+      padding: 10px;
+      border-radius: 50%;
+      background-color: #f1f1f1;
+      display: inline-block;
+      transition: background-color 0.3s ease;
+    }
+
+    .social-links a:hover {
+      background-color: #007bff;
+    }
+
+    .contact-right1 h3 {
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .contact-left1 h3 {
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .contact-left1 p {
+      font-size: 14px;
+      color: #666;
+    }
+
+    .contact-left1 input,
+    .contact-left1 textarea {
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 12px;
+      width: 100%;
+      font-size: 14px;
+      margin-bottom: 15px;
+    }
+
+    /* Google map styling */
+    .contact-left iframe {
+      width: 100%;
+      border: 0;
+      height: 300px;
+      border-radius: 8px;
+    }
+
+    .contact-right1 {
+      margin-top: 30px;
+    }
+  </style>
+
+  <body>
+    <!-- banner-body -->
+    <div class="banner-body cntct">
+      <div class="container">
+        <%- include('../common/navbar.ejs') %>
+
+        <!-- Flash Messages -->
+        <% if (sucess && sucess != '') { %>
+          <div
+            class="alert alert-success"
+            role="alert"
+            style="
+              position: absolute;
+              top: 50px;
+              left: 50%;
+              transform: translateX(-50%);
+              width: 50%;
+              text-align: center;
+              background-color: #d4edda;
+              color: #155724;
+              border: 1px solid #c3e6cb;
+              border-radius: 5px;
+              padding: 10px;
+              z-index: 1000;
+            "
+          >
+            <%= sucess %>
+          </div>
+          <% } else if (err && err != '') { %>
+          <div
+            class="alert alert-danger"
+            role="alert"
+            style="
+              position: absolute;
+              top: 50px;
+              left: 50%;
+              transform: translateX(-50%);
+              width: 50%;
+              text-align: center;
+              background-color: #f8d7da;
+              color: #721c24;
+              border: 1px solid #f5c6cb;
+              border-radius: 5px;
+              padding: 10px;
+              z-index: 1000;
+            "
+          >
+            <%= err %>
+          </div>
+          <% } %>
+
+          <!-- contact -->
+          <div class="contact">
+            <div class="contact-left">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2620.908687693293!2d2.3574429999999995!3d48.936181!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e66eb34e18b951%3A0xc3c6a4ac9498bfce!2sWorld&#39;s+Business+Import!5e0!3m2!1sen!2sin!4v1429768672602"
+                frameborder="0" style="border: 0; width: 100%; height: 300px;"></iframe>
+            </div>
+            <div class="contact-right">
+              <p class="phn">+9100 2481 5842</p>
+              <p class="phn-bottom">
+                4578 Marmora <span>Road, Glasgow D04 89GR</span>
+              </p>
+              <p class="lom">
+                Nullam ac urna velit. Pellentesque in arcu tortor. Pellentesque
+                nec est et elit varius pulvinar eget vitae sapien. Aenean vehicula
+                accumsan gravida.
+              </p>
+            </div>
+            <div class="clearfix"></div>
+            <div class="contact-left1">
+              <h3>Contact Us With <span>Any Question</span></h3>
+
+              <!-- Form that sends data to the backend -->
+              <form action="/contactcreate" method="POST" class="contact-form">
+                <div class="form-group">
+                  <input type="text" name="name" placeholder="Your Name:" required=" " />
+                </div>
+                <div class="form-group">
+                  <input type="text" name="phone" placeholder="Phone Number:" required=" " />
+                </div>
+                <div class="form-group">
+                  <input type="email" name="email" placeholder="E-mail:" required=" " />
+                </div>
+                <div class="form-group">
+                  <textarea placeholder="Message:" name="message" required=" "></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Submit</button>
+              </form>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+      </div>
+      <!-- //contact -->
+    </div>
+    </div>
+
+    <!-- footer -->
+    <%- include('../common/footer.ejs') %>

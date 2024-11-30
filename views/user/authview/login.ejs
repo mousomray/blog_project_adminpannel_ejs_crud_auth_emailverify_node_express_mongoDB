@@ -1,0 +1,101 @@
+<!--
+Author: W3layouts
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!DOCTYPE html>
+<html>
+  <%- include('../common/head.ejs') %>
+
+  <body>
+
+    <%- include('../common/navbar.ejs') %>
+
+    <!-- banner-body -->
+    <div class="banner-body logn">
+      <div class="container">
+        <!-- Flash Messages -->
+        <% if (sucess && sucess != '') { %>
+        <div
+          class="alert alert-success"
+          role="alert"
+          style="
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50%;
+            text-align: center;
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            border-radius: 5px;
+            padding: 10px;
+            z-index: 1000;
+          "
+        >
+          <%= sucess %>
+        </div>
+        <% } else if (err && err != '') { %>
+        <div
+          class="alert alert-danger"
+          role="alert"
+          style="
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50%;
+            text-align: center;
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            border-radius: 5px;
+            padding: 10px;
+            z-index: 1000;
+          "
+        >
+          <%= err %>
+        </div>
+        <% } %>
+
+        <!-- login-page -->
+        <div class="login">
+          <div class="login-grids">
+            <div class="col-md-6 log">
+              <h3>Login</h3>
+              <p>Welcome, please enter the following to continue.</p>
+              <p>
+                If you have previously Login with us, <a href="#">click here</a>
+              </p>
+              <form action="/logincreate" method="POST">
+                <h5>Email:</h5>
+                <input type="text" name="email" />
+                <h5>Password:</h5>
+                <input type="password" name="password" />
+                <input type="submit" value="Login" />
+              </form>
+              <a href="/passwordresetlink">Forgot Password ?</a>
+            </div>
+            <div class="col-md-6 login-right">
+              <h3>New Registration</h3>
+              <p>
+                By creating an account with our store, you will be able to move
+                through the checkout process faster, store multiple shipping
+                addresses, view and track your orders in your account and more.
+              </p>
+              <a href="/register" class="hvr-bounce-to-bottom button"
+                >Create An Account</a
+              >
+            </div>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+
+        <!-- //login-page -->
+      </div>
+    </div>
+    <%- include('../common/footer.ejs') %>
+  </body>
+</html>

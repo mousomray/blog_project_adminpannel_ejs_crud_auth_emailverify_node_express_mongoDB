@@ -1,0 +1,176 @@
+<!--
+Author: W3layouts
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!DOCTYPE html>
+<html>
+  <%- include('../common/head.ejs') %>
+
+  <body>
+    <!-- banner-body -->
+    <div class="banner-body abt">
+      <div class="container">
+        <%- include('../common/navbar.ejs') %>
+
+        <!-- Flash Messages -->
+        <% if (sucess && sucess != '') { %>
+        <div
+          class="alert alert-success"
+          role="alert"
+          style="
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50%;
+            text-align: center;
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            border-radius: 5px;
+            padding: 10px;
+            z-index: 1000;
+          "
+        >
+          <%= sucess %>
+        </div>
+        <% } else if (err && err != '') { %>
+        <div
+          class="alert alert-danger"
+          role="alert"
+          style="
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50%;
+            text-align: center;
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            border-radius: 5px;
+            padding: 10px;
+            z-index: 1000;
+          "
+        >
+          <%= err %>
+        </div>
+        <% } %>
+
+        <!-- single -->
+        <div class="single-page-artical">
+          <div class="artical-content">
+            <h3><%= blog.title %></h3>
+            <img
+              class="img-responsive"
+              src="http://localhost:3004/<%= blog.image %>"
+              alt=" "
+            />
+            <p><%= blog.description %></p>
+          </div>
+          <div class="artical-links">
+            <ul>
+              <li>
+                <small> </small
+                ><span
+                  ><%= new Date(blog.createdAt).toLocaleString('en-US', { year:
+                  'numeric', month: 'long', day: 'numeric', hour: 'numeric',
+                  minute: 'numeric', hour12: true, }) %></span
+                >
+              </li>
+              <li>
+                <a href="#"><small class="admin"> </small><span>admin</span></a>
+              </li>
+              <li>
+                <a href="#"
+                  ><small class="no"> </small
+                  ><span><%= blog.comments.length > 1 ? blog.comments.length + ' comments' : blog.comments.length + ' comment' %></span></a
+                >
+              </li>
+              <li>
+                <a href="#"
+                  ><small class="posts"> </small><span>View posts</span></a
+                >
+              </li>
+              <li>
+                <a href="#"
+                  ><small class="link"> </small><span>permalink</span></a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="comment-grid-top">
+            <h3>Responses</h3>
+
+            <%
+            blog.comments.slice(0,blog.comments.length).reverse().forEach((value)=>{
+            %>
+            <div class="comments-top-top">
+              <div class="top-comment-right">
+                <ul>
+                  <li>
+                    <span class="left-at"
+                      ><a href="#"><%= value.name %></a></span
+                    >
+                  </li>
+                  <li>
+                    <span class="right-at">
+                      <%= new Date(value.createdAt).toLocaleString('en-US', {
+                      year: 'numeric', month: 'long', day: 'numeric', hour:
+                      'numeric', minute: 'numeric', hour12: true, }) %>
+                    </span>
+                  </li>
+                </ul>
+                <p><%= value.message %></p>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+            <% }) %>
+          </div>
+          <div class="artical-commentbox">
+            <h3>leave a comment</h3>
+            <div class="table-form">
+              <form action="/addcomment/<%= blog._id %>" method="POST">
+                <input
+                  type="text"
+                  class="textbox"
+                  value="<%= user.name %>"
+                  name="name"
+                  readonly
+                />
+                <input
+                  type="text"
+                  class="textbox"
+                  value="<%= user.email %>"
+                  name="email"
+                  readonly
+                />
+                <input
+                  type="text"
+                  name="phone"
+                  value="Phone number"
+                  onfocus="this.value = '';"
+                  onblur="if (this.value == '') {this.value = 'Phone number';}"
+                />
+                <textarea
+                  name="message"
+                  value="Message:"
+                  onfocus="this.value = '';"
+                  onblur="if (this.value == '') {this.value = 'Message';}"
+                >
+Message</textarea
+                >
+                <input type="submit" value="Send" />
+              </form>
+            </div>
+          </div>
+        </div>
+        <!-- single -->
+      </div>
+    </div>
+    <!-- footer -->
+    <%- include('../common/footer.ejs') %>
+  </body>
+</html>
