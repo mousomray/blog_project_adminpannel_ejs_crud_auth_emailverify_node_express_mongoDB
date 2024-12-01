@@ -8,7 +8,7 @@ const comparePassword = (password, hashPassword) => {
 
 // Fit token in API header
 const UserAuth = async (req, res, next) => {
-  const token = req.body.token || req.query.token || req.headers["x-access-token"];
+  const token = req.body.token || req.query.token || req.headers["x-access-user-token"];
   if (!token) {
     return res.status(403).send({ message: "A token is required for authentication" });
   }

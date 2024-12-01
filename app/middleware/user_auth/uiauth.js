@@ -20,4 +20,4 @@ const UseruiAuth = (req, res, next) => {
     }
 };
 
-module.exports = { UseruiAuth }; /// assa
+module.exports = { UseruiAuth }; 

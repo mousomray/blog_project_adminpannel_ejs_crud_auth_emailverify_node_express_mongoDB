@@ -181,7 +181,7 @@ class uiauthcontroller {
             const user = await UserModel.findOne({ email });
             if (!user) {
                 req.flash('err', 'Email doesnot exist')
-                return res.redirect('/passwordresetlink'); 
+                return res.redirect('/passwordresetlink');
             }
             // Generate token for password reset
             const secret = user._id + process.env.USER_API_KEY;
@@ -232,6 +232,11 @@ class uiauthcontroller {
 
             if (!password || !confirmPassword) {
                 req.flash('err', 'New password and confirm password are required')
+                return res.redirect(`/forgetpassword/${id}/${token}`);
+            }
+
+            if (password.length < 8) {
+                req.flash('err', "Password should be atleast 8 characters long")
                 return res.redirect(`/forgetpassword/${id}/${token}`);
             }
 

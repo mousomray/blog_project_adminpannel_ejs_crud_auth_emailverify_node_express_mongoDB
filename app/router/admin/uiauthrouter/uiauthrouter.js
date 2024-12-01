@@ -11,6 +11,8 @@ router.post('/verifyusercreate', uiauthcontroller.verifyOtpPost) // For to add d
 router.get('/login', uiauthcontroller.loginGet) // Get data in login
 router.post('/logincreate', uiauthcontroller.loginPost) // Post data in login
 router.get('/adminlogout', uiauthcontroller.logout); // For Logout
-router.get('/', AdminuiAuth, uiauthcontroller.profilepage); // For profile
+router.get('/', AdminuiAuth, uiauthcontroller.profilepage); // For profile 
+router.get('/updatepassword', AdminuiAuth, uiauthcontroller.updatepasswordGet); // Show Update Form 
+router.post('/updatepasswordcreate', AdminuiAuth, uiauthcontroller.updatepasswordPost); // Post Update
 
 module.exports = router;  

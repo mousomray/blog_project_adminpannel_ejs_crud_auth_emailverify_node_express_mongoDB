@@ -45,12 +45,12 @@ class uiauthcontroller {
         }
     }
 
-    // verify OTP show form 
+    // verify OTP show form for register 
     async verifyOtpGet(req, res) {
         return res.render('admin/authview/userverify');
     }
 
-    // Post data
+    // verify OTP Post data for verify email for register
     async verifyOtpPost(req, res) {
         try {
             const { email, otp } = req.body;
@@ -176,6 +176,50 @@ class uiauthcontroller {
         res.clearCookie('admin_auth');
         req.flash('sucess', 'Logout Successfully')
         return res.redirect('/admin/login');
+    }
+
+    // Show update password form
+    async updatepasswordGet(req, res) {
+        return res.render('admin/authview/updatepassword', { user: req.user });
+    }
+
+    // Update Password post 
+    async updatepasswordPost(req, res) {
+        try {
+            const userId = req.user._id; // Get user ID from token
+            const { oldPassword, newPassword, confirmPassword } = req.body;
+            if (!oldPassword || !newPassword || !confirmPassword) {
+                req.flash('err', "All fields are required")
+                return res.redirect('/admin/updatepassword') 
+            }
+            if (newPassword.length < 8) {
+                req.flash('err', "Password should be atleast 8 characters long")
+                return res.redirect('/admin/updatepassword')
+            }
+            if (newPassword !== confirmPassword) {
+                req.flash('err', "Password don't match")
+                return res.redirect('/admin/updatepassword')
+            }
+            const user = await UserModel.findById(userId);
+            if (!user) {
+                req.flash('err', "User not found")
+                return res.redirect('/admin/updatepassword')
+            }
+            const isMatch = comparePassword(oldPassword, user.password);
+            if (!isMatch) {
+                req.flash('err', "Old password is incorrect")
+                return res.redirect('/admin/updatepassword')
+            }
+            const salt = bcrypt.genSaltSync(10);
+            const hashedNewPassword = await bcrypt.hash(newPassword, salt);
+            user.password = hashedNewPassword;
+            await user.save();
+            req.flash('sucess', 'Password update successfully')
+            return res.redirect('/admin');
+        } catch (error) {
+            req.flash('err', "Error updating password")
+            return res.redirect('/admin/updatepassword')
+        }
     }
 }
 
